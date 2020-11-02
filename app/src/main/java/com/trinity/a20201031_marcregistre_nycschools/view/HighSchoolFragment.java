@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +36,7 @@ public class HighSchoolFragment extends DaggerFragment implements HighSchoolAdap
     private HighSchoolAdapter adapter;
 
     private TextView error_view;
-
+    ProgressBar loadingIndicator;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
@@ -46,33 +47,15 @@ public class HighSchoolFragment extends DaggerFragment implements HighSchoolAdap
     @Override
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         Timber.d("onViewCreated called in high school fragment");
-        error_view = view.findViewById(R.id.error_view);
-        ProgressBar loadingIndicator = view.findViewById(R.id.loadingIndicator);
-        initializeRecyclerView(view);
-
-        final Observer<Boolean> isLoadingObserver = it -> {
-            if(it) {
-                Timber.d("Showing loading spinner");
-                loadingIndicator.setVisibility(View.VISIBLE);
-            } else {
-                error_view.setVisibility(View.GONE);
-                loadingIndicator.setVisibility(View.GONE);
-            }
-        };
-        highSchoolViewModel.isLoading.postValue(true);
-        highSchoolViewModel.isLoading.observe(getViewLifecycleOwner(), isLoadingObserver);
-
-        final Observer<List<NycHighSchool>> getNycHighSchoolDataObserver = it -> {
-            adapter.addData(it);
-        };
-        highSchoolViewModel.getNycHighSchoolData(getContext(), request).observe(getViewLifecycleOwner(), getNycHighSchoolDataObserver);
-
-        final Observer<Boolean> errorDialog = it -> showErrorDialog();
-        highSchoolViewModel.showErrorDialog.observe(getViewLifecycleOwner(), errorDialog);
+        initView(view);
+        setObservers();
     }
 
-    private void initializeRecyclerView(View view) {
+    private void initView(View view) {
         Timber.d("initialize Recyclerview in high school fragment.");
+        error_view = view.findViewById(R.id.error_view);
+        loadingIndicator = view.findViewById(R.id.loadingIndicator);
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -80,6 +63,35 @@ public class HighSchoolFragment extends DaggerFragment implements HighSchoolAdap
         adapter = new HighSchoolAdapter(getContext(), data);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void setObservers() {
+        final Observer<Boolean> showLoadingView = it -> {
+            Timber.d("Showing loading spinner");
+            loadingIndicator.setVisibility(View.VISIBLE);
+        };
+        highSchoolViewModel.showLoading.observe((LifecycleOwner) getContext(), showLoadingView);
+        final Observer<Boolean> hideLoadingView = it -> {
+            error_view.setVisibility(View.GONE);
+            loadingIndicator.setVisibility(View.GONE);
+        };
+        highSchoolViewModel.hideLoading.observe((LifecycleOwner) getContext(), hideLoadingView);
+
+        final Observer<Boolean> isLoadingObserver = it -> {
+            highSchoolViewModel.showLoadingView(it);
+        };
+        highSchoolViewModel.isLoading.postValue(true);
+        highSchoolViewModel.isLoading.observe(getViewLifecycleOwner(), isLoadingObserver);
+
+        final Observer<List<NycHighSchool>> getNycHighSchoolDataObserver = it -> {
+            adapter.addData(it);
+        };
+        highSchoolViewModel.getNycHighSchoolData((LifecycleOwner) getContext(), request).observe(getViewLifecycleOwner(),
+                                                                                                 getNycHighSchoolDataObserver);
+
+        final Observer<Boolean> errorDialog = it -> showErrorDialog();
+        highSchoolViewModel.showErrorDialog.observe(getViewLifecycleOwner(), errorDialog);
+
     }
 
     private void showErrorDialog() {

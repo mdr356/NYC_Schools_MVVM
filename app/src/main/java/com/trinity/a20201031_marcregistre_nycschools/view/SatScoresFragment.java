@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import com.trinity.a20201031_marcregistre_nycschools.R;
 import com.trinity.a20201031_marcregistre_nycschools.api.RetrofitApi;
@@ -17,6 +18,7 @@ import com.trinity.a20201031_marcregistre_nycschools.viewmodel.SatScoresViewMode
 import dagger.android.support.DaggerFragment;
 import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
+import timber.log.Timber;
 
 public class SatScoresFragment extends DaggerFragment {
     @Inject
@@ -31,6 +33,7 @@ public class SatScoresFragment extends DaggerFragment {
     private TextView sat_math_avg_score_text;
     private TextView num_of_sat_test_takers_text;
     private ConstraintLayout sat_score_view;
+    private ProgressBar loadingIndicator;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
@@ -43,34 +46,51 @@ public class SatScoresFragment extends DaggerFragment {
     @Override
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         initView(view);
-        ProgressBar loadingIndicator = view.findViewById(R.id.loadingIndicator);
+        setObservers();
+    }
+
+    private void setObservers() {
+        final Observer<Boolean> showLoadingView = it -> {
+            Timber.d("Showing loading spinner");
+            loadingIndicator.setVisibility(View.VISIBLE);
+        };
+        satScoresViewModel.showLoading.observe((LifecycleOwner) getContext(), showLoadingView);
+        final Observer<Boolean> hideLoadingView = it -> {
+            error_view.setVisibility(View.GONE);
+            loadingIndicator.setVisibility(View.GONE);
+        };
+        satScoresViewModel.hideLoading.observe((LifecycleOwner) getContext(), hideLoadingView);
+
         final Observer<Boolean> isLoadingObserver = it -> {
-            if(it) {
-                loadingIndicator.setVisibility(View.VISIBLE);
-            } else {
-                error_view.setVisibility(View.GONE);
-                loadingIndicator.setVisibility(View.GONE);
-            }
+            satScoresViewModel.showLoadingView(it);
         };
         satScoresViewModel.isLoading.postValue(true);
         satScoresViewModel.isLoading.observe(getViewLifecycleOwner(), isLoadingObserver);
 
-        final Observer<SatScores> getsatScoresViewModel = it -> {
+        final Observer<SatScores> getSatScoresViewModel = it -> {
             //populate view.
-            if (it == null) {
-                sat_score_view.setVisibility(View.VISIBLE);
-                sat_math_avg_score_text.setText("N/A");
-                num_of_sat_test_takers_text.setText("N/A");
-            } else {
-                sat_math_avg_score_text.setText(it.getSat_math_avg_score());
-                num_of_sat_test_takers_text.setText(it.getNum_of_sat_test_takers());
-                sat_score_view.setVisibility(View.VISIBLE);
-            }
+            satScoresViewModel.showSatScoreOrNot(it);
         };
-        satScoresViewModel.getSatScoresData(getContext(), request, nycHighSchool.getDbn()).observe(getViewLifecycleOwner(), getsatScoresViewModel);
+        satScoresViewModel.getSatScoresData(getContext(), request, nycHighSchool.getDbn()).observe(getViewLifecycleOwner(), getSatScoresViewModel);
+
+        final Observer<SatScores> showSatView = it -> {
+            sat_math_avg_score_text.setText(it.getSat_math_avg_score());
+            num_of_sat_test_takers_text.setText(it.getNum_of_sat_test_takers());
+            sat_score_view.setVisibility(View.VISIBLE);
+        };
+        satScoresViewModel.showSatView.observe((LifecycleOwner) getContext(), showSatView);
+
+        final Observer<Boolean> initializeSatView = it -> {
+            sat_score_view.setVisibility(View.VISIBLE);
+            sat_math_avg_score_text.setText("N/A");
+            num_of_sat_test_takers_text.setText("N/A");
+        };
+        satScoresViewModel.initializeSatView.observe((LifecycleOwner) getContext(), initializeSatView);
+
     }
 
     private void initView(View view) {
+        loadingIndicator = view.findViewById(R.id.loadingIndicator);
         error_view = view.findViewById(R.id.error_view);
         final TextView school_name = view.findViewById(R.id.school_name);
         final TextView overview_paragraph = view.findViewById(R.id.overview_paragraph);

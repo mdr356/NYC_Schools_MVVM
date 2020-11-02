@@ -1,6 +1,7 @@
 package com.trinity.a20201031_marcregistre_nycschools.viewmodel;
 
 import android.content.Context;
+import android.view.View;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -17,8 +18,13 @@ public class SatScoresViewModel extends ViewModel {
     @Inject
     SatRepository repository;
 
+
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<Boolean>();
     private final MutableLiveData<SatScores> satScores = new MutableLiveData<>();
+    public MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
+    public MutableLiveData<Boolean> hideLoading = new MutableLiveData<>();
+    public MutableLiveData<SatScores> showSatView = new MutableLiveData<>();
+    public MutableLiveData<Boolean> initializeSatView = new MutableLiveData<>();
 
     public LiveData<SatScores> getSatScoresData(Context ctx, RetrofitApi service, String schoolDbn) {
         repository.highSchoolSatScores(service, schoolDbn).observe((LifecycleOwner) ctx, schools -> {
@@ -26,5 +32,21 @@ public class SatScoresViewModel extends ViewModel {
                 satScores.postValue(schools);
         });
         return satScores;
+    }
+
+    public void showLoadingView(final Boolean shown) {
+        if(shown) {
+            showLoading.postValue(true);
+        } else {
+            hideLoading.postValue(false);
+        }
+    }
+
+    public void showSatScoreOrNot(final SatScores satScores) {
+        if (satScores == null) {
+            initializeSatView.postValue(true);
+        } else {
+            showSatView.postValue(satScores);
+        }
     }
 }

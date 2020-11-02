@@ -1,6 +1,5 @@
 package com.trinity.a20201031_marcregistre_nycschools.viewmodel;
 
-import android.content.Context;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -19,20 +18,31 @@ public class HighSchoolViewModel extends ViewModel {
     HighSchoolRepository highSchoolRepository;
 
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<Boolean>();
-    public MutableLiveData<Boolean> showErrorDialog = new MutableLiveData<>();
-    private final MutableLiveData<List<NycHighSchool>> nycHighSchool = new MutableLiveData<>();
+    public MutableLiveData<Boolean> showErrorDialog = new MutableLiveData<Boolean>();
+    public MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
+    public MutableLiveData<Boolean> hideLoading = new MutableLiveData<>();
 
-    public LiveData<List<NycHighSchool>> getNycHighSchoolData(Context ctx, RetrofitApi service) {
-        highSchoolRepository.highSchoolData(service).observe((LifecycleOwner) ctx, schools -> {
+    public MutableLiveData<List<NycHighSchool>> nycHighSchoolList   = new MutableLiveData<>();
+
+    public LiveData<List<NycHighSchool>> getNycHighSchoolData(LifecycleOwner ctx, RetrofitApi service) {
+        highSchoolRepository.highSchoolData(service).observe(ctx, schools -> {
             isLoading.postValue(false);
             if(schools == null) {
                 showErrorDialog.postValue(true);
             } else {
-                nycHighSchool.postValue(schools);
+                nycHighSchoolList.postValue(schools);
             }
         });
-        return nycHighSchool;
+        return nycHighSchoolList;
 
+    }
+
+    public void showLoadingView(final Boolean shown) {
+        if(shown) {
+            showLoading.postValue(true);
+        } else {
+            hideLoading.postValue(false);
+        }
     }
 }
 
