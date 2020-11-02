@@ -18,13 +18,11 @@ public class SatScoresViewModel extends ViewModel {
     SatRepository repository;
 
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<Boolean>();
-    public MutableLiveData<Boolean> showErrorDialog = new MutableLiveData<>();
     private final MutableLiveData<SatScores> satScores = new MutableLiveData<>();
 
     public LiveData<SatScores> getSatScoresData(Context ctx, RetrofitApi service, String schoolDbn) {
         repository.highSchoolSatScores(service, schoolDbn).observe((LifecycleOwner) ctx, schools -> {
             isLoading.postValue(false);
-                showErrorDialog.postValue(true);
                 satScores.postValue(schools);
         });
         return satScores;

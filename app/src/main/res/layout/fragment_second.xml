@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,225 +7,105 @@
     tools:context=".view.SatScoresFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:visibility="gone">
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/school_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/overview_paragraph"
-        android:padding="@dimen/default_padding"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
-
-    <TextView
-        android:id="@+id/overview_paragraph"
-        android:padding="@dimen/default_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_20sp"
-        app:layout_constraintTop_toBottomOf="@+id/school_name"
-        android:ellipsize="end"
-        android:lines="2"/>
-
-
-    <LinearLayout
-        android:id="@+id/language"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_padding"
-        app:layout_constraintTop_toBottomOf="@+id/overview_paragraph"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/language_offered_title"
+        <include
+            android:id="@+id/main_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text="@string/language"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+            layout="@layout/schools_list_item"/>
 
-        <TextView
-            android:id="@+id/language_offered"
+        <View
+            android:id="@+id/view_separator"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@+id/main_view"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sat_score_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text=""
-            android:ellipsize="end"
-            android:lines="2"/>
+            app:layout_constraintTop_toBottomOf="@+id/view_separator"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/num_of_sat_test_takers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_padding"
+                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_padding"
-        app:layout_constraintTop_toBottomOf="@+id/language"
-        android:orientation="vertical">
+                <TextView
+                    android:id="@+id/num_of_sat_test_takers_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_20sp"
+                    android:text="@string/num_of_sat_test_takers"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
-        <TextView
-            android:id="@+id/location_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text="@string/location"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+                <TextView
+                    android:id="@+id/num_of_sat_test_takers_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_20sp"
+                    android:text=""
+                    android:ellipsize="end"
+                    android:lines="2"/>
 
-        <TextView
-            android:id="@+id/location_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text=""
-            android:ellipsize="end"
-            android:lines="2"/>
+            </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/sat_math_avg_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/default_padding"
+                app:layout_constraintTop_toBottomOf="@+id/num_of_sat_test_takers"
+                android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/school_sport"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_padding"
-        app:layout_constraintTop_toBottomOf="@+id/location"
-        android:orientation="vertical">
+                <TextView
+                    android:id="@+id/sat_math_avg_score_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_20sp"
+                    android:text="@string/sat_math_avg_score"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
 
-        <TextView
-            android:id="@+id/school_sport_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text="@string/school_sport"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+                <TextView
+                    android:id="@+id/sat_math_avg_score_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_20sp"
+                    android:text=""
+                    android:ellipsize="end"
+                    android:lines="2"/>
 
-        <TextView
-            android:id="@+id/school_sport_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text=""
-            android:ellipsize="end"
-            android:lines="2"/>
+            </LinearLayout>
 
-    </LinearLayout>
+            <ProgressBar
+                android:id="@+id/loadingIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone">
 
-    <LinearLayout
-        android:id="@+id/attendance_rate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_padding"
-        app:layout_constraintTop_toBottomOf="@+id/school_sport"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/attendance_rate_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text="@string/attendance_rate"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+            </ProgressBar>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/attendance_rate_text"
+            android:id="@+id/error_view"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text=""
-            android:ellipsize="end"
-            android:lines="2"/>
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/error_msg"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:visibility="gone"/>
 
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view_separator"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/attendance_rate"/>
-
-    <LinearLayout
-        android:id="@+id/num_of_sat_test_takers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_padding"
-        app:layout_constraintTop_toBottomOf="@+id/view_separator"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/num_of_sat_test_takers_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text="@string/num_of_sat_test_takers"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
-
-        <TextView
-            android:id="@+id/num_of_sat_test_takers_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text=""
-            android:ellipsize="end"
-            android:lines="2"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/sat_math_avg_score"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/default_padding"
-        app:layout_constraintTop_toBottomOf="@+id/num_of_sat_test_takers"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/sat_math_avg_score_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text="@string/sat_math_avg_score"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
-
-        <TextView
-            android:id="@+id/sat_math_avg_score_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_20sp"
-            android:text=""
-            android:ellipsize="end"
-            android:lines="2"/>
-
-    </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    <ProgressBar
-        android:id="@+id/loadingIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone">
-
-    </ProgressBar>
-
-    <TextView
-        android:id="@+id/error_view"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/error_msg"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:visibility="gone"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
