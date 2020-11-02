@@ -1,5 +1,6 @@
 package com.trinity.a20201031_marcregistre_nycschools.model
 
+// using kotlin to reduce the amount of code that would have to be written if java was used.
 data class SatScores(
         val dbn: String? = null,
         val school_name: String? = null,

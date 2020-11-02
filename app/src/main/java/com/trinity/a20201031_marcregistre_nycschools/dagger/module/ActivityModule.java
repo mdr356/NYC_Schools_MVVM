@@ -1,6 +1,6 @@
 package com.trinity.a20201031_marcregistre_nycschools.dagger.module;
 
-import com.trinity.a20201031_marcregistre_nycschools.MainActivity;
+import com.trinity.a20201031_marcregistre_nycschools.view.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

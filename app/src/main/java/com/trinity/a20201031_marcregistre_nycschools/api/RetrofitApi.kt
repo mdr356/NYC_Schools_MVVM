@@ -4,6 +4,7 @@ import com.trinity.a20201031_marcregistre_nycschools.model.NycHighSchool
 import com.trinity.a20201031_marcregistre_nycschools.model.SatScores
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface RetrofitApi {
 
@@ -11,6 +12,8 @@ interface RetrofitApi {
     fun getSchoolDirectory(): Call<List<NycHighSchool>>
 
     @GET("resource/f9bf-2cp4.json")
-    fun getSchoolSatScores(): Call<SatScores>
+    fun getSchoolSatScores(
+        @Query("dbn") schoolDbn: String
+    ): Call<SatScores>
 
 }

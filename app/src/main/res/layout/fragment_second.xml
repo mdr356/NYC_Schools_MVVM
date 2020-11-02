@@ -4,8 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="15dp"
     tools:context=".view.SatScoresFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:visibility="gone">
 
     <TextView
         android:id="@+id/school_name"
@@ -196,6 +202,7 @@
             android:lines="2"/>
 
     </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

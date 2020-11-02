@@ -1,5 +1,13 @@
 package com.trinity.a20201031_marcregistre_nycschools.model
 
+import android.annotation.SuppressLint
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+// using kotlin to reduce the amount of code that would have to be written if java was used.
+// since i'm passing this object through a parceable, then I added the Parelize annotation.
+@SuppressLint("ParcelCreator")
+@Parcelize
 data class NycHighSchool(
     val dbn: String? = null,
     val school_name: String? = null,
@@ -58,4 +66,4 @@ data class NycHighSchool(
     val bbl: String? = null,
     val nta: String? = null,
     val borough: String? = null
-)
+): Parcelable

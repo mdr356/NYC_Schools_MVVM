@@ -73,7 +73,7 @@ public class HighSchoolAdapter extends RecyclerView.Adapter<HighSchoolAdapter.Vi
         }
     }
 
-    NycHighSchool getItem(int id) {
+    public NycHighSchool getItem(int id) {
         return mData.get(id);
     }
 
