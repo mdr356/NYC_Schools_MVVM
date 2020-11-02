@@ -7,16 +7,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-public class HighSchoolViewModelTest {
-
+public class SatScoresViewModelTest {
     @Rule
     public TestRule rule = new InstantTaskExecutorRule();
 
-    HighSchoolViewModel  viewModel;
+    SatScoresViewModel  viewModel;
 
     @Before
     public void setup() {
-        viewModel = new HighSchoolViewModel();
+        viewModel = new SatScoresViewModel();
     }
 
     @Test
@@ -44,4 +43,6 @@ public class HighSchoolViewModelTest {
         viewModel.hideLoading.observeForever(Assert::assertTrue);
         viewModel.showLoading.postValue(false);
     }
+
+    //Add More test cases
 }
