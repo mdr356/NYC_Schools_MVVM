@@ -19,30 +19,28 @@ public class SatScoresViewModelTest {
     }
 
     @Test
-    public void whenisLoadingIsTrueThenAssertObserverTrue() {
+    public void GivenisLoadingIsTrueWhenisLoadingIsbeingObserve_ThenIsLoadingShouldBeTrue() {
         viewModel.isLoading.observeForever(Assert::assertTrue);
         viewModel.isLoading.postValue(true);
     }
 
     @Test
-    public void whenisLoadingIsFalseThenAssertObserverFalse() {
+    public void GivenisLoadingIsFalseWhenisLoadingIsBeingObserveThenIsLoadingShouldBeFalse() {
         viewModel.isLoading.observeForever(Assert::assertFalse);
         viewModel.isLoading.postValue(false);
     }
 
     @Test
-    public void whenShowLoadingViewIsTrue_thenshowLoading_istrue_and_hideLoading_isFalse() {
+    public void Given_ShowLoadingIsTrue_WhenShowLoadingIsBeingObserved_ThenShowloadingShouldBeTrue_andHideLoadingFalse() {
         viewModel.showLoading.observeForever(Assert::assertTrue);
         viewModel.hideLoading.observeForever(Assert::assertFalse);
         viewModel.showLoading.postValue(true);
     }
 
     @Test
-    public void whenHideLoadingViewIsFalse_thenshowLoading_isFalse_and_hideLoading_isTrue() {
+    public void GivenShowLoadingIsFalse_WhenShowLoadingIsBeingObservedThenShowloadingShouldBeFalse_andHideLoadingTrue() {
         viewModel.showLoading.observeForever(Assert::assertFalse);
         viewModel.hideLoading.observeForever(Assert::assertTrue);
         viewModel.showLoading.postValue(false);
     }
-
-    //Add More test cases
 }

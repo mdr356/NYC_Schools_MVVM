@@ -12,15 +12,17 @@ import javax.inject.Inject;
 
 public class HighSchoolViewModel extends ViewModel {
 
+
     @Inject public HighSchoolViewModel(){}
 
     @Inject
-    HighSchoolRepository highSchoolRepository;
+    public HighSchoolRepository highSchoolRepository;
 
     public MutableLiveData<Boolean> isLoading = new MutableLiveData<Boolean>();
     public MutableLiveData<Boolean> showErrorDialog = new MutableLiveData<Boolean>();
     public MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
     public MutableLiveData<Boolean> hideLoading = new MutableLiveData<>();
+    public MutableLiveData<Boolean> showErrorView  = new MutableLiveData<>();
 
     public MutableLiveData<List<NycHighSchool>> nycHighSchoolList   = new MutableLiveData<>();
 

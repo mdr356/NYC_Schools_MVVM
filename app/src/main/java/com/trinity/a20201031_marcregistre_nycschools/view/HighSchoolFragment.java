@@ -1,5 +1,6 @@
 package com.trinity.a20201031_marcregistre_nycschools.view;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
@@ -18,6 +20,7 @@ import com.trinity.a20201031_marcregistre_nycschools.api.RetrofitApi;
 import com.trinity.a20201031_marcregistre_nycschools.model.NycHighSchool;
 import com.trinity.a20201031_marcregistre_nycschools.view.adapter.HighSchoolAdapter;
 import com.trinity.a20201031_marcregistre_nycschools.viewmodel.HighSchoolViewModel;
+import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.DaggerFragment;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,7 @@ import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;
 
-public class HighSchoolFragment extends DaggerFragment implements HighSchoolAdapter.ItemClickListener {
+public class HighSchoolFragment extends Fragment implements HighSchoolAdapter.ItemClickListener {
 
     @Inject
     HighSchoolViewModel highSchoolViewModel;
@@ -36,7 +39,20 @@ public class HighSchoolFragment extends DaggerFragment implements HighSchoolAdap
     private HighSchoolAdapter adapter;
 
     private TextView error_view;
-    ProgressBar loadingIndicator;
+    private ProgressBar loadingIndicator;
+
+    // Instead of using DaggerFragment, using this instead:
+    // AndroidSupportInjection.inject(this) is a contract that allows all the @Inject field to get injected.
+    @Override
+    public void onAttach(final Context context) {
+        injectMembers();
+        super.onAttach(context);
+    }
+    protected void injectMembers() {
+        AndroidSupportInjection.inject(this);
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
@@ -92,6 +108,8 @@ public class HighSchoolFragment extends DaggerFragment implements HighSchoolAdap
         final Observer<Boolean> errorDialog = it -> showErrorDialog();
         highSchoolViewModel.showErrorDialog.observe(getViewLifecycleOwner(), errorDialog);
 
+        final Observer<Boolean> showErrorView = it -> showErrorView();
+        highSchoolViewModel.showErrorView.observe(getViewLifecycleOwner(), showErrorView);
     }
 
     private void showErrorDialog() {
@@ -102,11 +120,15 @@ public class HighSchoolFragment extends DaggerFragment implements HighSchoolAdap
 
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        error_view.setVisibility(View.VISIBLE);
+                        highSchoolViewModel.showErrorView.postValue(true);
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public void showErrorView() {
+        error_view.setVisibility(View.VISIBLE);
     }
 
     @Override
