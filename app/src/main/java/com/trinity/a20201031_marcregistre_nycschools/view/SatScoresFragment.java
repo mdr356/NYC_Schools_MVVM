@@ -87,7 +87,7 @@ public class SatScoresFragment extends Fragment {
             //populate view.
             satScoresViewModel.showSatScoreOrNot(it);
         };
-        satScoresViewModel.getSatScoresData(getContext(), request, nycHighSchool.getDbn()).observe(getViewLifecycleOwner(), getSatScoresViewModel);
+        satScoresViewModel.getSatScoresData(getContext(), request, nycHighSchool.getSchool_name()).observe(getViewLifecycleOwner(), getSatScoresViewModel);
 
         final Observer<SatScores> showSatView = it -> {
             sat_math_avg_score_text.setText(it.getSat_math_avg_score());

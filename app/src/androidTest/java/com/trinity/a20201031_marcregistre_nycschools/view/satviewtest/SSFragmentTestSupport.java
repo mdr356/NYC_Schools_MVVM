@@ -11,7 +11,7 @@ import com.trinity.a20201031_marcregistre_nycschools.viewmodel.SatScoresViewMode
 /*
 supporting class for the test.
  */
-public class SatScoresFragmentViewTest extends SatScoresFragment {
+public class SSFragmentTestSupport extends SatScoresFragment {
 
     public static SatScoresViewModel satScoresViewModelTest;
     public static RetrofitApi        retrofitApiTest;

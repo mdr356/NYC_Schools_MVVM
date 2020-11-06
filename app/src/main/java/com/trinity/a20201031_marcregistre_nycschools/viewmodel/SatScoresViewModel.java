@@ -13,10 +13,11 @@ import javax.inject.Inject;
 
 public class SatScoresViewModel extends ViewModel {
 
-    @Inject public SatScoresViewModel() {}
+    @Inject
+    public SatScoresViewModel() {}
 
-    @Inject public
-    SatRepository repository;
+    @Inject
+    public SatRepository repository;
 
 
     public       MutableLiveData<Boolean>   isLoading   = new MutableLiveData<Boolean>();
@@ -26,8 +27,8 @@ public class SatScoresViewModel extends ViewModel {
     public MutableLiveData<SatScores> showSatView = new MutableLiveData<>();
     public MutableLiveData<Boolean> initializeSatView = new MutableLiveData<>();
 
-    public LiveData<SatScores> getSatScoresData(Context ctx, RetrofitApi service, String schoolDbn) {
-        repository.highSchoolSatScores(service, schoolDbn).observe((LifecycleOwner) ctx, schools -> {
+    public LiveData<SatScores> getSatScoresData(Context ctx, RetrofitApi service, String schoolName) {
+        repository.highSchoolSatScores(service, schoolName).observe((LifecycleOwner) ctx, schools -> {
             isLoading.postValue(false);
                 satScores.postValue(schools);
         });

@@ -10,11 +10,11 @@ import timber.log.Timber;
 
 public class SatRepositoryImpl implements SatRepository {
 
-    @Override public MutableLiveData<SatScores> highSchoolSatScores(final RetrofitApi service, final String schoolDbn) {
+    @Override public MutableLiveData<SatScores> highSchoolSatScores(final RetrofitApi service, final String schoolName) {
         Timber.d("Api call to get school SAT scores");
         final MutableLiveData<SatScores> highSchoolDataResponse = new MutableLiveData<>();
 
-        Call<SatScores> callAsync = service.getSchoolSatScores(schoolDbn);
+        Call<SatScores> callAsync = service.getSchoolSatScores(schoolName);
         callAsync.enqueue(new Callback<SatScores>() {
             @Override public void onResponse(final Call<SatScores> call, final Response<SatScores> response) {
                 if (response.isSuccessful()){

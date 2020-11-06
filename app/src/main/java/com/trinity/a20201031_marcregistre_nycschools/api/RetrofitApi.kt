@@ -13,7 +13,7 @@ interface RetrofitApi {
 
     @GET("resource/f9bf-2cp4.json")
     fun getSchoolSatScores(
-        @Query("dbn") schoolDbn: String
+        @Query("school_name") schoolName: String
     ): Call<SatScores>
 
 }

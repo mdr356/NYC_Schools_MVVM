@@ -22,7 +22,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread;
 import static com.trinity.a20201031_marcregistre_nycschools.view.MockData.nycSchoolData;
-import static com.trinity.a20201031_marcregistre_nycschools.view.highschoolviewtest.HighSchoolFragmentViewTest.highSchoolViewModelTest;
+import static com.trinity.a20201031_marcregistre_nycschools.view.highschoolviewtest.HSFragmentTestSupport.highSchoolViewModelTest;
 
 @RunWith(AndroidJUnit4.class)
 public class TestHighSchoolFragmentView {
@@ -36,7 +36,7 @@ public class TestHighSchoolFragmentView {
             ApplicationProvider.getApplicationContext());
         navController.setGraph(R.navigation.nav_graph);
         // Create a graphical FragmentScenario for the TitleScreen
-        FragmentScenario<HighSchoolFragmentViewTest> fragmentScenario = FragmentScenario.launchInContainer(HighSchoolFragmentViewTest.class);
+        FragmentScenario<HSFragmentTestSupport> fragmentScenario = FragmentScenario.launchInContainer(HSFragmentTestSupport.class);
 
         // Set the NavController property on the fragment
         fragmentScenario.onFragment(fragment -> Navigation.setViewNavController(fragment.requireView(), navController));

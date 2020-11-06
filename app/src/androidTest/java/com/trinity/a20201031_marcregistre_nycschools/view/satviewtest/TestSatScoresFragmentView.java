@@ -11,8 +11,6 @@ import com.google.gson.Gson;
 import com.trinity.a20201031_marcregistre_nycschools.R;
 import com.trinity.a20201031_marcregistre_nycschools.model.NycHighSchool;
 import com.trinity.a20201031_marcregistre_nycschools.model.SatScores;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,7 +25,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread;
 import static com.trinity.a20201031_marcregistre_nycschools.view.MockData.nycSchoolData;
 import static com.trinity.a20201031_marcregistre_nycschools.view.MockData.satScoresData;
-import static com.trinity.a20201031_marcregistre_nycschools.view.satviewtest.SatScoresFragmentViewTest.satScoresViewModelTest;
+import static com.trinity.a20201031_marcregistre_nycschools.view.satviewtest.SSFragmentTestSupport.satScoresViewModelTest;
 
 @RunWith(AndroidJUnit4.class)
 public class TestSatScoresFragmentView {
@@ -46,7 +44,7 @@ public class TestSatScoresFragmentView {
         result.putParcelable("SCHOOL_DATA_BUNDLE", nyc1);
 
         // Create a graphical FragmentScenario for the TitleScreen
-        FragmentScenario<SatScoresFragmentViewTest> fragmentScenario = FragmentScenario.launchInContainer(SatScoresFragmentViewTest.class, result);
+        FragmentScenario<SSFragmentTestSupport> fragmentScenario = FragmentScenario.launchInContainer(SSFragmentTestSupport.class, result);
 
         // Set the NavController property on the fragment
         fragmentScenario.onFragment(fragment -> Navigation.setViewNavController(fragment.requireView(), navController));

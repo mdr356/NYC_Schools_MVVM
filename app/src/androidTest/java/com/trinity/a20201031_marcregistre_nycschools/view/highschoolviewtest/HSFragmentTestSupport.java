@@ -12,7 +12,7 @@ import java.util.List;
 /*
 supporting class for the test.
  */
-public class HighSchoolFragmentViewTest extends HighSchoolFragment {
+public class HSFragmentTestSupport extends HighSchoolFragment {
 
     public static HighSchoolViewModel highSchoolViewModelTest;
     public static RetrofitApi         retrofitApiTest;
