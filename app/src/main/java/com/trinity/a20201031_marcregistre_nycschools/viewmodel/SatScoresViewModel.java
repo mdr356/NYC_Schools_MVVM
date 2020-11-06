@@ -13,15 +13,15 @@ import javax.inject.Inject;
 
 public class SatScoresViewModel extends ViewModel {
 
-    @Inject SatScoresViewModel() {}
+    @Inject public SatScoresViewModel() {}
 
-    @Inject
+    @Inject public
     SatRepository repository;
 
 
-    public MutableLiveData<Boolean> isLoading = new MutableLiveData<Boolean>();
-    private final MutableLiveData<SatScores> satScores = new MutableLiveData<>();
-    public MutableLiveData<Boolean> showLoading = new MutableLiveData<>();
+    public       MutableLiveData<Boolean>   isLoading   = new MutableLiveData<Boolean>();
+    public final MutableLiveData<SatScores> satScores   = new MutableLiveData<>();
+    public       MutableLiveData<Boolean>   showLoading = new MutableLiveData<>();
     public MutableLiveData<Boolean> hideLoading = new MutableLiveData<>();
     public MutableLiveData<SatScores> showSatView = new MutableLiveData<>();
     public MutableLiveData<Boolean> initializeSatView = new MutableLiveData<>();

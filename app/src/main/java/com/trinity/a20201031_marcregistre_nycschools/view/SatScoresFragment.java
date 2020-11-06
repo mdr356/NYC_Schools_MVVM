@@ -1,13 +1,14 @@
 package com.trinity.a20201031_marcregistre_nycschools.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import com.trinity.a20201031_marcregistre_nycschools.R;
@@ -15,17 +16,18 @@ import com.trinity.a20201031_marcregistre_nycschools.api.RetrofitApi;
 import com.trinity.a20201031_marcregistre_nycschools.model.NycHighSchool;
 import com.trinity.a20201031_marcregistre_nycschools.model.SatScores;
 import com.trinity.a20201031_marcregistre_nycschools.viewmodel.SatScoresViewModel;
-import dagger.android.support.DaggerFragment;
+import dagger.android.support.AndroidSupportInjection;
 import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 import timber.log.Timber;
 
-public class SatScoresFragment extends DaggerFragment {
-    @Inject
-    SatScoresViewModel satScoresViewModel;
+public class SatScoresFragment extends Fragment {
 
     @Inject
-    RetrofitApi request;
+    public SatScoresViewModel satScoresViewModel;
+
+    @Inject
+    public RetrofitApi request;
 
     private NycHighSchool nycHighSchool;
 
@@ -34,6 +36,20 @@ public class SatScoresFragment extends DaggerFragment {
     private TextView num_of_sat_test_takers_text;
     private ConstraintLayout sat_score_view;
     private ProgressBar loadingIndicator;
+
+    // Instead of using DaggerFragment, using this instead:
+    // AndroidSupportInjection.inject(this) is a contract that allows all the @Inject field to get injected.
+    @Override
+    public void onAttach(final Context context) {
+        injectMembers();
+        super.onAttach(context);
+    }
+    protected void injectMembers() {
+        AndroidSupportInjection.inject(this);
+    }
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment

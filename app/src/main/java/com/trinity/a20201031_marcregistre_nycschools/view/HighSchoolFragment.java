@@ -31,10 +31,10 @@ import timber.log.Timber;
 public class HighSchoolFragment extends Fragment implements HighSchoolAdapter.ItemClickListener {
 
     @Inject
-    HighSchoolViewModel highSchoolViewModel;
+    public HighSchoolViewModel highSchoolViewModel;
 
     @Inject
-    RetrofitApi request;
+    public RetrofitApi request;
 
     private HighSchoolAdapter adapter;
 

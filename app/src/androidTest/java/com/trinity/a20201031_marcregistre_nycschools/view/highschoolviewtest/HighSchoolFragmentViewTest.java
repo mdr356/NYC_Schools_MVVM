@@ -1,10 +1,11 @@
-package com.trinity.a20201031_marcregistre_nycschools.view;
+package com.trinity.a20201031_marcregistre_nycschools.view.highschoolviewtest;
 
 import androidx.lifecycle.MutableLiveData;
 import com.trinity.a20201031_marcregistre_nycschools.api.RetrofitApi;
 import com.trinity.a20201031_marcregistre_nycschools.fakeretrofit.RestClient;
 import com.trinity.a20201031_marcregistre_nycschools.model.NycHighSchool;
 import com.trinity.a20201031_marcregistre_nycschools.repository.HighSchoolRepository;
+import com.trinity.a20201031_marcregistre_nycschools.view.HighSchoolFragment;
 import com.trinity.a20201031_marcregistre_nycschools.viewmodel.HighSchoolViewModel;
 import java.util.List;
 
